@@ -61,32 +61,32 @@ public class App {
     }
 
     private static void displayAllCustomers() {
-        Connection conn = null;
-        Statement stmt = null;
-        ResultSet rs = null;
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
         try {
-            conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
-            stmt = conn.createStatement();
-            rs = stmt.executeQuery("SELECT ContactName, CompanyName, City, Country, Phone FROM Customers ORDER BY Country");
+            connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery("SELECT ContactName, CompanyName, City, Country, Phone FROM Customers ORDER BY Country");
 
             System.out.printf("%-25s %-30s %-20s %-20s %-15s\n", "Contact Name", "Company", "City", "Country", "Phone");
             System.out.println("---------------------------------------------------------------------------------------------");
-            while (rs.next()) {
+            while (resultSet.next()) {
                 System.out.printf("%-25s %-30s %-20s %-20s %-15s\n",
-                        rs.getString("ContactName"),
-                        rs.getString("CompanyName"),
-                        rs.getString("City"),
-                        rs.getString("Country"),
-                        rs.getString("Phone"));
+                        resultSet.getString("ContactName"),
+                        resultSet.getString("CompanyName"),
+                        resultSet.getString("City"),
+                        resultSet.getString("Country"),
+                        resultSet.getString("Phone"));
             }
         } catch (SQLException e) {
             System.out.println("Error retrieving customers.");
             e.printStackTrace();
         } finally {
             try {
-                if (rs != null) rs.close();
-                if (stmt != null) stmt.close();
-                if (conn != null) conn.close();
+                if (resultSet != null) resultSet.close();
+                if (statement != null) statement.close();
+                if (connection != null) connection.close();
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
